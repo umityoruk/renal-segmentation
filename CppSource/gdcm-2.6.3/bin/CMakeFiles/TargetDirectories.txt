@@ -1,0 +1,16 @@
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Utilities/gdcmuuid/CMakeFiles/gdcmuuid.dir
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Utilities/doxygen/CMakeFiles/DOCBOOK_MANPAGES.dir
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Utilities/gdcmzlib/CMakeFiles/gdcmzlib.dir
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Utilities/gdcmexpat/lib/CMakeFiles/gdcmexpat.dir
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Utilities/gdcmopenjpeg-v1/libopenjpeg/CMakeFiles/gdcmopenjpeg.dir
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Utilities/gdcmjpeg/16/CMakeFiles/gdcmjpeg16.dir
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Utilities/gdcmjpeg/12/CMakeFiles/gdcmjpeg12.dir
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Utilities/socketxx/socket++/CMakeFiles/socketxx.dir
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Source/MediaStorageAndFileFormat/CMakeFiles/gdcmMSFF.dir
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Utilities/gdcmcharls/CMakeFiles/gdcmcharls.dir
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Source/MessageExchangeDefinition/CMakeFiles/gdcmMEXD.dir
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Source/InformationObjectDefinition/CMakeFiles/gdcmIOD.dir
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Source/DataStructureAndEncodingDefinition/CMakeFiles/gdcmDSED.dir
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Source/DataDictionary/CMakeFiles/gdcmDICT.dir
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Utilities/gdcmjpeg/8/CMakeFiles/gdcmjpeg8.dir
+/Users/umityoruk/Documents/PythonDev/NewSegmentation/Notebook/CppSource/gdcm-2.6.3/bin/Source/Common/CMakeFiles/gdcmCommon.dir

@@ -1,0 +1,165 @@
+'\" t
+.\"     Title: gdcmpap3
+.\"    Author: Mathieu Malaterre
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: 04/01/2016
+.\"    Manual: DICOM Manipulation.
+.\"    Source: GDCM VER_FULL
+.\"  Language: English
+.\"
+.TH "GDCMPAP3" "1" "04/01/2016" "GDCM VER_FULL" "DICOM Manipulation\&."
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gdcmpap3 \- Tool to convert PAPYRUS 3\&.0 to DICOM\&.
+.SH "SYNOPSIS"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+gdcmpap3 [options] file\-in file\-out
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+The
+\fBgdcmpap3\fR
+command line program takes as input a PAPYRUS 3\&.0 file (file\-in) and process it to generate an output (pseudo) DICOM file (file\-out)\&. The command line option dictate the type of operation(s)
+\fBgdcmpap3\fR
+will use to generate the output file\&.
+.SH "PARAMETERS"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+file\-in   DICOM input filename
+
+file\-out  DICOM output filename
+.fi
+.if n \{\
+.RE
+.\}
+.SH "OPTIONS"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-i \-\-input      DICOM filename
+  \-o \-\-output     DICOM filename
+.fi
+.if n \{\
+.RE
+.\}
+.SH "SPECIFIC OPTIONS"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-S \-\-split            Split multiframes PAPYRUS 3\&.0 into multiples DICOM files
+     \-\-decomp\-pap3      Use PAPYRUS 3\&.0 for decompressing (can be combined with \-\-split)\&.
+     \-\-check\-iop        Check that the Image Orientation (Patient) Attribute is ok (see \-\-split)\&.
+.fi
+.if n \{\
+.RE
+.\}
+.SH "GENERAL OPTIONS"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-h   \-\-help
+         print this help text and exit
+
+  \-v   \-\-version
+         print version information and exit
+
+  \-V   \-\-verbose
+         verbose mode (warning+error)\&.
+
+  \-W   \-\-warning
+         warning mode, print warning information
+
+  \-E   \-\-error
+         error mode, print error information
+
+  \-D   \-\-debug
+         debug mode, print debug information
+.fi
+.if n \{\
+.RE
+.\}
+.SH "ENVIRONMENT VARIABLE"
+.PP
+\fBGDCM_ROOT_UID\fR
+Root UID
+.SH "SIMPLE USAGE"
+.PP
+\fBgdcmpap3\fR
+is a great tool to convert broken PAPYRUS 3\&.0 implementation into properly parsable DICOM file\&. Usage is simply:
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gdcmpap3 input\&.pa3 output\&.dcm
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+or if you prefer being explicit:
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gdcmpap3 \-i input\&.pa3 \-o output\&.dcm
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Even though
+\fBgdcmpap3\fR
+can overwrite directly on the same file (\fBinput\&.pa3\fR
+=
+\fBoutput\&.dcm\fR), it is recommended that user should first convert into a different file to make sure the bug is properly handled by GDCM\&.
+.SH "SEE ALSO"
+.PP
+\fBgdcmdump\fR(1),
+\fBgdcmconv\fR(1),
+\fBgdcminfo\fR(1)
+.SH "AUTHOR"
+.PP
+\fBMathieu Malaterre\fR
+.RS 4
+Main developer
+.RE
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2006, 2011 Mathieu Malaterre
+.br

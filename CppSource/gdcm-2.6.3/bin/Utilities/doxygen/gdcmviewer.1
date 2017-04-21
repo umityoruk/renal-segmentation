@@ -1,0 +1,183 @@
+'\" t
+.\"     Title: gdcmviewer
+.\"    Author: Mathieu Malaterre
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: 04/01/2016
+.\"    Manual: DICOM Manipulation.
+.\"    Source: GDCM VER_FULL
+.\"  Language: English
+.\"
+.TH "GDCMVIEWER" "1" "04/01/2016" "GDCM VER_FULL" "DICOM Manipulation\&."
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gdcmviewer \- Simple DICOM viewer\&.
+.SH "SYNOPSIS"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+gdcmviewer [options] file\-in
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+The
+\fBgdcmviewer\fR
+is a simple tool that show how to use
+\fIvtkGDCMImageReader\fR\&. The class that use gdcm to make a layer to VTK\&.
+\fBgdcmviewer\fR
+is basically only just a wrapper around VTK/GDCM\&.
+.PP
+This tool is meant for testing integration of GDCM in VTK\&. You should see it as a demo tool\&. It does compile with VTK ranging from 4\&.2 to 5\&.10, but only with VTK 5\&.2 (or above) can play with the widgets (as described below)\&.
+.SH "PARAMETERS"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+file\-in   DICOM input filename
+.fi
+.if n \{\
+.RE
+.\}
+.SH "OPTIONS"
+.SS "specific options"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+     \-\-force\-rescale    force rescale (advanced users)
+     \-\-force\-spacing    force spacing (advanced users)
+  \-r \-\-recursive        Recusively descend directory
+.fi
+.if n \{\
+.RE
+.\}
+.SS "general options"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-h   \-\-help
+         print this help text and exit
+
+  \-v   \-\-version
+         print version information and exit
+
+  \-V   \-\-verbose
+         verbose mode (warning+error)\&.
+
+  \-W   \-\-warning
+         warning mode, print warning information
+
+  \-E   \-\-error
+         error mode, print error information
+
+  \-D   \-\-debug
+         debug mode, print debug information
+.fi
+.if n \{\
+.RE
+.\}
+.SH "TYPICAL USAGE"
+.SH "SIMPLE USAGE"
+.PP
+For now gdcmviewer should be started from a command line prompt\&. The next argument should be the name of the DICOM file you wish to read\&. For instance:
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gdcmviewer \-V 012345\&.002\&.050\&.dcm
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+gdcmviewer will try to read your file, and then print the vtk information associated with this file\&. Basically what kind of image you are looking at\&.
+.PP
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+ScalarType is the DICOM Real World Value type
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Dimensions is the dimension of the image
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Spacing is the spacing of the image
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+NumberOfScalarComponents should be 1 for grayscale & PALETTE COLOR and 3 for RGB, YBR data\&.
+.RE
+.sp
+.SH "WIKI LINK"
+.PP
+The wiki page, with color pictures can be found at:
+\m[blue]\fBhttp://gdcm\&.sourceforge\&.net/wiki/index\&.php/Gdcmviewer\fR\m[]
+.SH "SEE ALSO"
+.PP
+\fBgdcmdump\fR(1),
+\fBgdcm2vtk\fR(1)
+.SH "AUTHOR"
+.PP
+\fBMathieu Malaterre\fR
+.RS 4
+Main developer
+.RE
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2006, 2011 Mathieu Malaterre
+.br

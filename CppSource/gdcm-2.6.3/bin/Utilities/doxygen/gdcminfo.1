@@ -1,0 +1,247 @@
+'\" t
+.\"     Title: gdcminfo
+.\"    Author: Mathieu Malaterre
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: 04/01/2016
+.\"    Manual: DICOM Manipulation.
+.\"    Source: GDCM VER_FULL
+.\"  Language: English
+.\"
+.TH "GDCMINFO" "1" "04/01/2016" "GDCM VER_FULL" "DICOM Manipulation\&."
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gdcminfo \- Display meta info about the input DICOM file\&.
+.SH "SYNOPSIS"
+.HP \w'\fBgdcminfo\fR\ 'u
+\fBgdcminfo\fR [\fBoptions\fR] [file\-in/dir\-in...]
+.SH "DESCRIPTION"
+.PP
+The
+\fBgdcminfo\fR
+command line program takes as input a DICOM file, or a directory and process it to extract meta\-information about the DICOM file(s) processed\&.
+.SH "PARAMETERS"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+file\-in/dir\-in   DICOM input filename/dirname
+.fi
+.if n \{\
+.RE
+.\}
+.SH "OPTIONS"
+.SS "specific options"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-r \-\-recursive          recursive traversal of an input directory
+  \-d \-\-check\-deflated     check if file is proper deflated syntax\&.
+     \-\-resources\-path     Resources path\&.
+     \-\-md5sum             Compute md5sum of Pixel Data attribute value\&.
+     \-\-check\-compression  check the encapsulated stream compression (lossless/lossy)\&.
+.fi
+.if n \{\
+.RE
+.\}
+.SS "general options"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-h   \-\-help
+         print this help text and exit
+
+  \-v   \-\-version
+         print version information and exit
+
+  \-V   \-\-verbose
+         verbose mode (warning+error)\&.
+
+  \-W   \-\-warning
+         warning mode, print warning information
+
+  \-E   \-\-error
+         error mode, print error information
+
+  \-D   \-\-debug
+         debug mode, print debug information
+.fi
+.if n \{\
+.RE
+.\}
+.SS "environment variable"
+.PP
+\fBGDCM_RESOURCES_PATH\fR
+path pointing to resources files (Part3\&.xml, \&.\&.\&.)
+.SH "SIMPLE USAGE"
+.SS "gdcmData"
+.PP
+Using data from gdcmData:
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gdcminfo gdcmData/012345\&.002\&.050\&.dcm
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+MediaStorage is 1\&.2\&.840\&.10008\&.5\&.1\&.4\&.1\&.1\&.4 [MR Image Storage]
+NumberOfDimensions: 2
+Dimensions: (256,256)
+Origin: (\-85,21\&.6,108\&.7)
+Spacing: (0\&.664062,0\&.664062,1\&.5)
+DirectionCosines: (1,0,0,0,0,\-1)
+Rescale Intercept/Slope: (0,1)
+SamplesPerPixel    :1
+BitsAllocated      :16
+BitsStored         :16
+HighBit            :15
+PixelRepresentation:1
+Orientation Label: CORONAL
+.fi
+.if n \{\
+.RE
+.\}
+.SS "Davie Clunie datasets:"
+.PP
+Using data from David Clunie datasets:
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gdcminfo BRTUM001\&.dcm
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+MediaStorage is 1\&.2\&.840\&.10008\&.5\&.1\&.4\&.1\&.1\&.4\&.1 [Enhanced MR Image Storage]
+NumberOfDimensions: 3
+Dimensions: (256,256,15)
+Origin: (40,\-105,105)
+Spacing: (0\&.820312,0\&.820312,6)
+DirectionCosines: (0,1,0,0,0,\-1)
+Rescale Intercept/Slope: (0,1)
+SamplesPerPixel    :1
+BitsAllocated      :16
+BitsStored         :16
+HighBit            :15
+PixelRepresentation:1
+Orientation Label: SAGITTAL
+.fi
+.if n \{\
+.RE
+.\}
+.SS "Checking the md5sum of the Pixel Data"
+.PP
+After compressing a DICOM file (see gdcmconv) using a lossless compression algorithm, it is fairly easy to compare the two files for differences at DICOM attribute level\&. However one operation is slightly easier to do: how to make sure the compression was actually lossless ? In this case one could use the \(enmd5sum operation\&.
+.PP
+Take an uncompressed DICOM image file:
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gdcminfo \-\-md5sum SIEMENS_ImageLocationUN\&.dcm
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+The tool return: 0621954acd5815e0b4f7b65fcc6506b1
+.PP
+Now compress this file:
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gdcmconv \-\-jpegls SIEMENS_ImageLocationUN\&.dcm lossless_compressed\&.dcm
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+and then check again the md5sum:
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gdcminfo \-\-md5sum lossless_compressed\&.dcm
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+The tool return: 0621954acd5815e0b4f7b65fcc6506b1
+.SS "Checking if Pixel Data is lossless"
+.PP
+In some environment one wish to check whether or not the DICOM file is lossless\&. It is fairly easy to do that in most cases\&. Only on two occasions this is not clear from the sole DICOM Attributes\&. When the Transfer Syntax is JPEG 2000 Image Compression (1\&.2\&.840\&.10008\&.1\&.2\&.4\&.91) and when the Transfer Syntax is JPEG\-LS Lossy (Near\-Lossless) Image Compression (1\&.2\&.840\&.10008\&.1\&.2\&.4\&.81)\&.
+.PP
+In this case, the only solution is to open the Pixel Data element, read the specific JPEG header and check whether or not the JPEG transformation was lossless or not:
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gdcminfo \-\-check\-compression gdcmData/MAROTECH_CT_JP2Lossy\&.dcm
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+The tool returns: "Encapsulated Stream was found to be: lossy"
+.PP
+Pay attention that this tool also checks the Image Lossy Compression attribute (0028,2110)\&. This means
+\fB\-\-check\-compression\fR
+will also returns a value of lossy if a predecessor was found to be lossy compressed\&.
+.SH "SEE ALSO"
+.PP
+\fBgdcmdump\fR(1),
+\fBgdcmraw\fR(1),
+\fBgdcmconv\fR(1)
+.SH "AUTHOR"
+.PP
+\fBMathieu Malaterre\fR
+.RS 4
+Main developer
+.RE
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2006, 2011 Mathieu Malaterre
+.br

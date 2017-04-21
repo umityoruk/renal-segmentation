@@ -1,0 +1,469 @@
+'\" t
+.\"     Title: gdcmanon
+.\"    Author: Mathieu Malaterre
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: 04/01/2016
+.\"    Manual: DICOM Manipulation.
+.\"    Source: GDCM VER_FULL
+.\"  Language: English
+.\"
+.TH "GDCMANON" "1" "04/01/2016" "GDCM VER_FULL" "DICOM Manipulation\&."
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gdcmanon \- Tool to anonymize a DICOM file\&.
+.SH "SYNOPSIS"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+gdcmanon [options] file\-in file\-out
+gdcmanon [options] dir\-in  dir\-out
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DESCRIPTION"
+.PP
+The
+\fBgdcmanon\fR
+tool is an implementation of PS 3\&.15 / E\&.1 / Basic Application Level Confidentiality Profile (Implementation of E\&.1\&.1 De\-identify & E\&.1\&.2 Re\-identify)
+.PP
+This tool is split into two very different operating mode:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+An implementation of PS 3\&.15, see \-e and \-d flags
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+A dumb mode, see \(endumb
+.RE
+.sp
+Dumb mode and PS 3\&.15 do not work well together, you should really only use one type of anonymization\&. In case of doubt, avoid using \(endumb\&.
+.PP
+In order to use the PS 3\&.15 implementation (\-d & \-e flag), you\*(Aqll need a certificate to do de\-identification operations, and the associated private key to do the re\-identification operation\&. If you are only doing a one\-shot anonymization and do not need to properly re\-identify the DICOM file, you can safely discard the private key and only keep the certificate\&. See OpenSSL refsection below for an example on how to generate the private key/certificate pair\&.
+.PP
+gdcmanon will exit early if OpenSSL was not configured/build properly into the library (see GDCM_USE_SYSTEM_OPENSSL in cmake)\&.
+.SH "PARAMETERS"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+file\-in   DICOM input filename
+
+file\-out  DICOM output filename
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+or
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+file\-in   DICOM input directory
+
+file\-out  DICOM output directory
+.fi
+.if n \{\
+.RE
+.\}
+.SH "OPTIONS"
+.PP
+You need to specify at least one operating mode, from the following list (and only one):
+.SS "Required parameters"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-e \-\-de\-identify            De\-identify DICOM (default)
+  \-d \-\-re\-identify            Re\-identify DICOM
+     \-\-dumb                   Dumb mode anonymizer
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Warning when operating in dumb mode, you need to also specify an operation to do, such as \*(Aqremove\*(Aq or \*(Aqempty\*(Aq a tag, see below the dumb mode options\&.
+.SS "specific options"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-i \-\-input                  DICOM filename / directory
+  \-o \-\-output                 DICOM filename / directory
+  \-r \-\-recursive              recursively process (sub\-)directories\&.
+     \-\-continue               Do not stop when file found is not DICOM\&.
+     \-\-root\-uid               Root UID\&.
+     \-\-resources\-path         Resources path\&.
+  \-k \-\-key                    Path to RSA Private Key\&.
+  \-c \-\-certificate            Path to Certificate\&.
+.fi
+.if n \{\
+.RE
+.\}
+.SS "encryption options"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+     \-\-des            DES\&.
+     \-\-des3           Triple DES\&.
+     \-\-aes128         AES 128\&.
+     \-\-aes192         AES 192\&.
+     \-\-aes256         AES 256\&.
+.fi
+.if n \{\
+.RE
+.\}
+.SS "dumb mode options"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+     \-\-empty   %d,%d           DICOM tag(s) to empty
+     \-\-remove  %d,%d           DICOM tag(s) to remove
+     \-\-replace %d,%d,%s        DICOM tag(s) to replace
+.fi
+.if n \{\
+.RE
+.\}
+.SS "general options"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+  \-h   \-\-help
+         print this help text and exit
+
+  \-v   \-\-version
+         print version information and exit
+
+  \-V   \-\-verbose
+         verbose mode (warning+error)\&.
+
+  \-W   \-\-warning
+         warning mode, print warning information
+
+  \-E   \-\-error
+         error mode, print error information
+
+  \-D   \-\-debug
+         debug mode, print debug information
+.fi
+.if n \{\
+.RE
+.\}
+.SS "environment variable"
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+  GDCM_ROOT_UID Root UID
+  GDCM_RESOURCES_PATH path pointing to resources files (Part3\&.xml, \&.\&.\&.)
+.fi
+.if n \{\
+.RE
+.\}
+.SH "TYPICAL USAGE"
+.SS "De\-identification (anonymization, encrypt)"
+.PP
+The only thing required for this operation is a certificate file (in PEM format)\&.
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gdcmanon \-\-certificate certificate\&.pem \-e original\&.dcm original_anonymized\&.dcm
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+You can use \(enasn1 option from gdcmdump to dump the generated DataSet as ASN1 structure (see
+\fBgdcmdump\fR(1) for example)\&.
+.SS "Re\-identification (de\-anonymization,decrypt)"
+.PP
+The only thing required for this operation is a private key (in PEM format)\&. It is required that the private key used for the re\-identification process, was the actual private key used to generate the certificate file (certificate\&.pem) used during the de\-identification step\&.
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gdcmanon \-\-key privatekey\&.pem \-d original_anonymized\&.dcm original_copy\&.dcm
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+You can then check that original\&.dcm and original_copy\&.dcm are identical\&.
+.SS "Multiple files caveat"
+.PP
+It is very important to understand the following refsection, when anonymizing more than one single file\&. When anonymizing multiple DICOM files, you are required to use the directory input\&. You cannot call multiple time the gdcmanon command line tool\&. Indeed the tool stores in memory during the process only a hash table of conversion so that each time a particular value is found it get always replaced by the same de\-identified value (think: consistent Series Instance UID)\&.
+.SS "Dumb mode"
+.PP
+This functionality is not described in the DICOM standard\&. Users are advised that improper use of that mode is not recommended, meaning that important tag can be emptied/removed/replaced resulting in illegal/invalid DICOM file\&. Only use when you know what you are doing\&. If you delete a Type 1 attribute, chance is that your DICOM file will be not accepted in most DICOM third party viewer\&. Unfortunately this is often this mode that is implemented in popular DICOM Viewer, always prefer what the DICOM standard describes, and avoid the dumb mode\&.
+.PP
+The following example shows how to use dumb mode and achieve 5 operations at the same time:
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Empty the tag (0010,0010) Patient\*(Aqs Name,
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Empty the tag (0010,0020) Patient ID,
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Remove the tag (0010,0040) Patient\*(Aqs Sex
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Remove the tag (0010,1010) Patient\*(Aqs Age
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Replace the tag (0010,1030) Patient\*(Aqs Weight with the value \*(Aq10\*(Aq
+.RE
+.sp
+You are required to check which DICOM attribute is Type 1 and Type 1C, before trying to
+\fB\*(AqEmpty\*(Aq\fR
+or
+\fB\*(AqRemove\*(Aq\fR
+a particular DICOM attribute\&. For the same reason, you are required to check what are valid value in a replace operation\&.
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gdcmanon \-\-dumb \-\-empty 10,10 \-\-empty 10,20 \-\-remove 10,40 \-\-remove 10,1010 \-\-replace 10,1030,10 012345\&.002\&.050\&.dcm out\&.dcm
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Multiple operation of \(endumb mode can take place, just reuse the output of the previous operation\&. Always use gdcmdump on the input and output file to check what was actually achieved\&. You can use a diff program to check only what changed (see
+\fBgdcmdiff\fR(1) for example)\&.
+.sp
+.it 1 an-trap
+.nr an-no-space-flag 1
+.nr an-break-flag 1
+.br
+.ps +1
+\fBIrreversible Anonymization\fR
+.RS 4
+.PP
+In some very rare cases, one would want to anonymize using the PS 3\&.15 mode so as to take benefit of the automatic conversion of all content that could contain Patient related information\&.
+.PP
+In the end all Patient related information has been removed and has been secretly stored in the 0400,0500 DICOM attribute\&. However to make sure that no\-one ever try to break that security using brute\-force algorithm, one want want to remove completely this DICOM attribute\&. This will make the DICOM:
+.PP
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Completely free of any Patient related information (as per PS 3\&.15 specification)
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Remove any mean of people to brute force attack the file to find out the identity of the Patient
+.RE
+.sp
+In this case one could simply do, as a first step execute the reversible anonymizer:
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gdcmanon \-c certificate\&.pem input\&.dcm anonymized_reversible\&.dcm
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+and now completely remove the DICOM attribute containing the secretly encrypted Patient related information:
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ gdcmanon \-\-dumb \-\-remove 400,500 \-\-remove 12,62 \-\-remove 12,63 anonymized_reversible\&.dcm anonymized_irreversible\&.dcm
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+.PP \fBRemarks:\fR. As mentionned in DICOM Sup 142, this anonymization is preferred over de\-identification since: It is not required that the Encrypted Attributes Data Set be created; indeed, there may be circumstances where the Dataset is expected to be archived long enough that any contemporary encryption technology may be inadequate to provide long term protection against unauthorized recovery of identification
+.RE
+.SH "OPENSSL"
+.PP
+On most system you can have access to OpenSSL to generate the Private Key/Certificate pair\&.
+.SS "Generating a Private Key"
+.PP
+Command line to generate a rsa key (512bit)
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ openssl genrsa \-out CA_key\&.pem
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Command line to generate a rsa key (2048bit)
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ openssl genrsa \-out CA_key\&.pem 2048
+.fi
+.if n \{\
+.RE
+.\}
+.PP
+Command line to generate a rsa key (2048bit) + passphrase
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ openssl genrsa \-des3 \-out CA_key\&.pem 2048
+.fi
+.if n \{\
+.RE
+.\}
+.SS "Generating a Certificate"
+.PP
+From your previously generated Private Key, you can now generate a certificate in PEM (DER format is currently not supported)\&.
+.PP
+.if n \{\
+.RS 4
+.\}
+.nf
+$ openssl req \-new \-key CA_key\&.pem \-x509 \-days 365 \-out CA_cert\&.cer
+.fi
+.if n \{\
+.RE
+.\}
+.SH "DICOM STANDARD:"
+.PP
+Page to the DICOM Standard:
+.PP
+\m[blue]\fBhttp://dicom\&.nema\&.org/\fR\m[]
+.PP
+The DICOM Standard at the time of releasing gdcmanon is:
+.PP
+\m[blue]\fBftp://medical\&.nema\&.org/medical/dicom/2008/\fR\m[]
+.PP
+Direct link to PS 3\&.15\-2008:
+.PP
+\m[blue]\fBftp://medical\&.nema\&.org/medical/dicom/2008/08_15pu\&.pdf\fR\m[]
+.SH "WARNINGS"
+.PP
+Certain attributes may still contains Protected Health Information (PHI) after an anonymization step\&. This is typically the case for Patient\*(Aqs Address (0010,1040)\&. The reason is that this particular attribute is not supposed to be in the composite IODs in the first place\&. DICOM Supp 142 includes it (however gdcmanon does not implement it)\&.
+.SH "SEE ALSO"
+.PP
+\fBgdcmconv\fR(1),
+\fBgdcmdump\fR(1),
+\fBgdcmdiff\fR(1),
+\fBopenssl\fR(1),
+\fBdumpasn1\fR(1)
+.SH "AUTHOR"
+.PP
+\fBMathieu Malaterre\fR
+.RS 4
+Main developer
+.RE
+.SH "COPYRIGHT"
+.br
+Copyright \(co 2006, 2011 Mathieu Malaterre
+.br
