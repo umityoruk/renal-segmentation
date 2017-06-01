@@ -1,2 +1,0 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc ../../../bin/libsocketxx.a  CMakeFiles/socketxx.dir/sockstream.cpp.o CMakeFiles/socketxx.dir/sockinet.cpp.o CMakeFiles/socketxx.dir/fork.cpp.o CMakeFiles/socketxx.dir/protocol.cpp.o CMakeFiles/socketxx.dir/echo.cpp.o
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib ../../../bin/libsocketxx.a

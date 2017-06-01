@@ -1,2 +1,0 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc ../../../bin/libgdcmexpat.a  CMakeFiles/gdcmexpat.dir/xmlparse.c.o CMakeFiles/gdcmexpat.dir/xmltok.c.o CMakeFiles/gdcmexpat.dir/xmlrole.c.o
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib ../../../bin/libgdcmexpat.a
