@@ -1,0 +1,2 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc ../../bin/libgdcmuuid.a  CMakeFiles/gdcmuuid.dir/compare.c.o CMakeFiles/gdcmuuid.dir/gen_uuid.c.o CMakeFiles/gdcmuuid.dir/pack.c.o CMakeFiles/gdcmuuid.dir/parse.c.o CMakeFiles/gdcmuuid.dir/unpack.c.o CMakeFiles/gdcmuuid.dir/unparse.c.o CMakeFiles/gdcmuuid.dir/uuid_time.c.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib ../../bin/libgdcmuuid.a
