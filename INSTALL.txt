@@ -1,0 +1,35 @@
+* Install Anaconda (Python3)
+* Install pydicom
+  pip install pydicom
+
+* Install OpenCV 3.2.0 or above
+  Download OpenCV source files
+
+  cd ~/opencvSource/opencv-3.2.0/
+  mkdir build
+  cd build
+
+  cmake -D CMAKE_BUILD_TYPE=RELEASE \
+    -D CMAKE_INSTALL_PREFIX=~/opencv \
+    -D INSTALL_PYTHON_EXAMPLES=OFF \
+    -D INSTALL_C_EXAMPLES=ON \
+    -D PYTHON_EXECUTABLE=~/anaconda3/bin/python \
+    -D BUILD_EXAMPLES=ON ..
+
+  make -j4
+  make install
+
+  // OpenCV will be installed to the path specified in CMAKE_INSTALL_PREFIX
+
+* Compile GrabCut3d
+  // Edit the Makefile located in /renal-segmentation/CppSource/GrabCut3d
+  // If you specify a different path in CMAKE_INSTALL_PREFIX update the following variable.
+  opencv_lib_path = ~/opencv/lib
+  
+
+* Run the program on uncompressed dicom files.
+  Usage:
+  python renalSegment.py <input_dir> <output_dir>
+
+  Example Usage:
+  python renalSegment.py ~/SegmentationTest/COR_FS_MFAST_sts_fbbn_AP_X_50_8004 ~/SegmentationTest/Output

@@ -44,7 +44,7 @@ Extended for 3D 3-channel inputs.
 //
 //M*/
 
-#include <opencv.hpp>
+#include "opencv2/opencv.hpp"
 #include "gcgraph.hpp"
 #include <limits>
 #include <vector>
@@ -775,7 +775,8 @@ void grabCut3d( std::vector<Mat> &img3d, std::vector<Mat> &mask3d,
 
     // Check for empty image
     bool isEmpty = true;
-    for( Mat &slice : img3d) {
+    for( int i=0; i < nz; i++) {
+	Mat &slice = img3d[i];
     	if (!slice.empty()) {
     		isEmpty = false;
     		break;

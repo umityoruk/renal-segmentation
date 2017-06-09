@@ -1,2 +1,0 @@
-all:
-	g++ -I. -std=c++11 test.cpp -o test
