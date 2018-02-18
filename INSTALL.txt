@@ -10,7 +10,7 @@
   cd build
 
   cmake -D CMAKE_BUILD_TYPE=RELEASE \
-    -D CMAKE_INSTALL_PREFIX=~/opencv \
+    -D CMAKE_INSTALL_PREFIX=/opt/opencv \
     -D INSTALL_PYTHON_EXAMPLES=OFF \
     -D INSTALL_C_EXAMPLES=ON \
     -D PYTHON_EXECUTABLE=~/anaconda3/bin/python \
@@ -24,7 +24,7 @@
 * Compile GrabCut3d
   // Edit the Makefile located in /renal-segmentation/CppSource/GrabCut3d
   // If you specify a different path in CMAKE_INSTALL_PREFIX update the following variable.
-  opencv_lib_path = ~/opencv/lib
+  opencv_lib_path = opt/opencv/lib
   
 
 * Run the program on uncompressed dicom files.
@@ -32,4 +32,4 @@
   python renalSegment.py <input_dir> <output_dir>
 
   Example Usage:
-  python renalSegment.py ~/SegmentationTest/COR_FS_MFAST_sts_fbbn_AP_X_50_8004 ~/SegmentationTest/Output
+  python renalSegment.py /data/DicomIn /data/DicomOut
