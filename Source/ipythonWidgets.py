@@ -21,18 +21,20 @@ def overlayShow(recon, overlay3d, zz=0, tt=0, th=0, oa=1, oe=True, im_range=None
 			overlay_im = overlay3d[:,:,zz,tt]
 		else:
 			overlay_im = overlay3d[:,:,zz]
-		overlay_mask = np.ma.masked_where(overlay_im < th, overlay_im)
-		if o_range is None:
-			o_min = np.amin(overlay3d)
-			o_max = np.amax(overlay3d)
-		else:
-			o_min = o_range[0]
-			o_max = o_range[1]
-		plt.imshow(overlay_mask, interpolation='none', cmap=plt.cm.jet, vmin=o_min, vmax=o_max, alpha=oa)
-		# overlay_border = overlay_im > th
-		# overlay_border[binary_erosion(overlay_border, disk(1))] = 0
-		# overlay_border_mask = np.ma.masked_where(overlay_border <= 0, overlay_border)
-		# plt.imshow(overlay_border_mask, interpolation='none', cmap=plt.cm.terrain, vmin=o_min, vmax=o_max)
+		overlay_im_masked = overlay_im < th
+		if not np.all(overlay_im_masked):
+			overlay_mask = np.ma.masked_where(overlay_im_masked, overlay_im)
+			if o_range is None:
+				o_min = np.amin(overlay3d)
+				o_max = np.amax(overlay3d)
+			else:
+				o_min = o_range[0]
+				o_max = o_range[1]
+			plt.imshow(overlay_mask, interpolation='none', cmap=plt.cm.jet, vmin=o_min, vmax=o_max, alpha=oa)
+			# overlay_border = overlay_im > th
+			# overlay_border[binary_erosion(overlay_border, disk(1))] = 0
+			# overlay_border_mask = np.ma.masked_where(overlay_border <= 0, overlay_border)
+			# plt.imshow(overlay_border_mask, interpolation='none', cmap=plt.cm.terrain, vmin=o_min, vmax=o_max)
 	# Display the plot in the output widget (if given)
 	if out != None:
 		ax=plt.gca()
