@@ -574,19 +574,19 @@ def imresize3d(im3d, scale):
     im_scaled = np.fft.ifftn(im_fft_scaled)
     return np.abs(im_scaled)
 
-from scipy.misc import imresize
+from skimage.transform import resize
 def imresize3d_along_z(im3d, scale):
     nx, ny, nz = im3d.shape
     im_list = []
     for zz in range(nz):
         im2d = im3d[:,:,zz]
-        im2d = imresize(im2d, (2*nx, 2*ny), interp='bilinear')
+        im2d = resize(im2d, (2*nx, 2*ny))
         im_list.append(im2d)
     im_temp3d = np.dstack(im_list)
     im_list = []
     for xx in range(im_temp3d.shape[0]):
         im2d = im_temp3d[xx,:,:]
-        im2d = imresize(im2d, (2*ny, 2*nz), interp='bilinear')
+        im2d = resize(im2d, (2*ny, 2*nz))
         im_list.append(im2d[np.newaxis, :, :])
     im3d_sc = np.vstack(im_list)
     return im3d_sc
@@ -597,13 +597,13 @@ def imresize3d_along_x(im3d, scale):
     im_list = []
     for xx in range(nx):
         im2d = im3d[xx,:,:]
-        im2d = imresize(im2d, (2*ny, 2*nz), interp='bilinear')
+        im2d = resize(im2d, (2*ny, 2*nz))
         im_list.append(im2d[np.newaxis, :, :])
     im_temp3d = np.vstack(im_list)
     im_list = []
     for zz in range(im_temp3d.shape[2]):
         im2d = im_temp3d[:,:,zz]
-        im2d = imresize(im2d, (2*nx, 2*ny), interp='bilinear')
+        im2d = resize(im2d, (2*nx, 2*ny))
         im_list.append(im2d)
     im3d_sc = np.dstack(im_list)
     return im3d_sc
@@ -614,13 +614,13 @@ def imresize3d_along_y(im3d, scale):
     im_list = []
     for yy in range(ny):
         im2d = im3d[:,yy,:]
-        im2d = imresize(im2d, (2*nx, 2*nz), interp='bilinear')
+        im2d = resize(im2d, (2*nx, 2*nz))
         im_list.append(im2d[:, np.newaxis, :])
     im_temp3d = np.hstack(im_list)
     im_list = []
     for zz in range(im_temp3d.shape[2]):
         im2d = im_temp3d[:,:,zz]
-        im2d = imresize(im2d, (2*nx, 2*ny), interp='bilinear')
+        im2d = resize(im2d, (2*nx, 2*ny))
         im_list.append(im2d)
     im3d_sc = np.dstack(im_list)
     return im3d_sc

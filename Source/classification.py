@@ -1,6 +1,7 @@
 import numpy as np
 import os
 import pickle
+import warnings
 
 from scipy import interpolate 
 from scipy.ndimage.morphology import distance_transform_edt
@@ -14,7 +15,9 @@ def get_model(models_path, num_feats):
   # model_filename = os.path.join(os.getcwd(), '../Model', 'subsegment_model_f' + str(num_feats) + '.pkl')
   model_filename = os.path.join(models_path, 'subsegment_model_f' + str(num_feats) + '.pkl')
   with open(model_filename, 'rb') as f:
-    model = pickle.load(f)
+    with warnings.catch_warnings():
+      warnings.simplefilter("ignore", category=UserWarning)
+      model = pickle.load(f)
   return model
 
 def make_predictions(im4d, spacing, time_stamps, kidney_labels3d, models_path):

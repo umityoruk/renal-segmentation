@@ -9,7 +9,7 @@ from Source.classification import make_predictions, relabel_predictions
 
 
 def autoSegmentFromDicom(input_dir, output_dir=None, threshold_multiplier=1,
-                         models_path=None, root_path=None):
+                         models_path=None, root_path=None, skip_classification=False):
 	# ml_labels:    np.array containing the segmentation masks 
 	#               0 = BG, 
 	#               1 = Aorta (reserved)
@@ -62,13 +62,17 @@ def autoSegmentFromDicom(input_dir, output_dir=None, threshold_multiplier=1,
 	gc_labels = gc_labels.astype(np.uint8)
 	print('GC segmentation completed.')
 
-	print('Running ML segmentation ...')
-	time_stamps = np.arange(nt)*temp_res
-	prediction3d_ss = make_predictions(recon_ss, spacing, time_stamps, gc_labels_ss, models_path=models_path)
-	prediction3d = np.repeat(np.repeat(np.repeat(prediction3d_ss, ss_f[0], axis=0), ss_f[1], axis=1), ss_f[2], axis=2)
-	prediction3d = prediction3d[:nx, :ny, :nz]
-	ml_labels = relabel_predictions(prediction3d, gc_labels)
-	print('ML segmentation completed.')
+	if not skip_classification:
+		print('Running ML segmentation ...')
+		time_stamps = np.arange(nt)*temp_res
+		prediction3d_ss = make_predictions(recon_ss, spacing, time_stamps, gc_labels_ss, models_path=models_path)
+		prediction3d = np.repeat(np.repeat(np.repeat(prediction3d_ss, ss_f[0], axis=0), ss_f[1], axis=1), ss_f[2], axis=2)
+		prediction3d = prediction3d[:nx, :ny, :nz]
+		ml_labels = relabel_predictions(prediction3d, gc_labels)
+		print('ML segmentation completed.')
+	else:
+		prediction3d = (gc_labels > 0).astype(np.uint8)
+		ml_labels = relabel_predictions(prediction3d, gc_labels)
 
 	if output_dir is not None:
 		print('Saving segmentation masks ...')	
