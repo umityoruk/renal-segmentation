@@ -2,7 +2,9 @@
 
 Automatic Renal Segmentation for MR Urography Using 3D-GrabCut and Random Forests
 
+This is the implementation of the algorithm described in the following paper:
 
+>[Yoruk, U., Hargreaves, B. A. and Vasanawala, S. S. (2018), Automatic renal segmentation for MR urography using 3D-GrabCut and random forests. Magn. Reson. Med, 79: 1696–1707. doi:10.1002/mrm.26806](http://onlinelibrary.wiley.com/doi/10.1002/mrm.26806/full)
 
 The source code is located in GitHub repository:
 
@@ -20,15 +22,15 @@ Run the docker image using:
 
 ```
 
-docker run -it --rm -v /path/to/local/dir:/data -p 8888:8888 renal-segment
+docker run -it --rm -v /path/to/local/dir:/data -p 8888:8888 umityoruk/renal-segmentation
 
 ```
 
-The image starts the jupyter notebook server at port 8888. You can access the notebook by using the link provided in the terminal. 
+The image starts the jupyter notebook server at port 8888. You can access the notebook by using the link provided in the terminal. The path `/path/to/local/dir` is a directory on the host machine that is mounted as `/data` on the docker container. If you put your dicom images in this directory, you can access them from the Jupyter Notebook running inside the docker container.
 
 
 
-Please see "/Notebook/Automatic\_Segmentation\_Example.ipynb" for usage examples.
+See "/Notebook/Automatic\_Segmentation\_Example.ipynb" for usage examples.
 
 
 
@@ -40,10 +42,10 @@ If you want to process dicom images directly without using the notebook you can 
 
 ```
 
-docker run --rm  -v /path/to/local/dir:/data renal-segment "python renalSegment.py /data/DicomIn /data/DicomOut"
+docker run --rm  -v /path/to/local/dir:/data umityoruk/renal-segmentation "python renalSegment.py /data/DicomIn /data/DicomOut"
 
 ```
 
-The path `/path/to/local/dir` is a directory on the host machine that is mounted as `/data` on the docker image. The example above assumes that the dicom images are stored in `/path/to/local/dir/DicomIn` and the output folder `DicomOut` is the last parameter to the renalSegment script.  
+The example above assumes that the dicom images are stored in `/path/to/local/dir/DicomIn` and the output folder `DicomOut` is the last parameter to the renalSegment script.  
 
 
